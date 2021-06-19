@@ -42,11 +42,8 @@ public class Project2Rana {
 			left = idx + 1;
 			return ithsmallestelement(array, left, right, k);
 
-		}
+		}}
 
-	}
-
-	
 	public int partition(int[] arr, int left, int right, int pivot) {
 		
 		
@@ -90,8 +87,6 @@ public class Project2Rana {
 		
 		return x;
 	}
-
-
 
 
 	public static void main(String[] args) {
