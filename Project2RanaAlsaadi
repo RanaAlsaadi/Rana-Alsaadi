@@ -1,0 +1,131 @@
+package programs;
+
+import java.util.Random;
+
+public class Project2Rana {
+	
+	static Random rand = new Random(); 
+	
+// find kth smallest element in the array.
+	
+	static double Probability = 0.25;
+	public int ithsmallestelement(int[] array, int left, int right, int k) {
+
+		int sizeOfthearray = right - left + 1;
+		
+
+		int prob = (int) (sizeOfthearray * Probability);
+		int idx = generateRandomPivot(left, right);
+		int LeftE = idx-left;
+		int RightE = right-idx;
+		
+		while(LeftE<prob || RightE <prob)
+		{
+			 idx = generateRandomPivot(left, right);
+			 LeftE = idx-left;
+			 RightE = right-idx;
+		}
+
+		// if partition value is equal to the kth position,
+        // return value at k.
+		
+		if (k == idx) {
+			return k;
+  // if partition value is less than kth position,
+ // search right side of the array.
+		} else if (k < idx) {
+
+			right = idx - 1;
+			return ithsmallestelement(array, left, right, k);
+		} else { // if partition value is more than kth position,
+	        // search left side of the array.
+			left = idx + 1;
+			return ithsmallestelement(array, left, right, k);
+
+		}
+
+	}
+
+	
+	public int partition(int[] arr, int left, int right, int pivot) {
+		
+		
+		//Moving pivot to last
+		swap(arr, pivot, right); 
+		
+		 int si=left;
+		  int i=left;
+	
+				 while(i<right)
+				 {
+		             if (arr[i] <= pivot)  // elements of less value
+		                 // to the left of the pivot location
+		             {
+		            	 swap(arr, i, si); 
+		            	 si++;
+		             }
+		             i++;
+		        }
+	
+				 if(arr[si] > arr[right])
+	           	  swap(arr, right, si); // swapping si to the final pivot location
+		
+
+		return si;
+	}
+
+	public static void swap(int[] arr, int a, int b)
+	{
+		int temp = arr[a];
+		arr[a] = arr[b];
+		arr[b] = temp;
+	}
+
+
+	public int generateRandomPivot(int left, int right) {
+		int x=rand.nextInt(right);
+		
+		while(x<left)
+			x=rand.nextInt(right);
+		
+		return x;
+	}
+
+
+
+
+	public static void main(String[] args) {
+		
+		int c=1;
+		  Project2Rana obj = new Project2Rana();
+		while(c<10)
+		{
+			 
+		int n =rand.nextInt(1000);
+		
+		while(n<100)
+			n=rand.nextInt(1000);
+		
+		int[] arr=new int[n];
+		
+		int k = rand.nextInt(100);
+
+		long startTime = System.nanoTime(); 
+		
+		for (int i = 0; i < n; i++) {
+			arr[i] = rand.nextInt(1000); 
+		}
+		
+			int K = obj.ithsmallestelement(arr, 0, arr.length - 1, k);
+			
+			System.out.println("Kth element is " + K+" for the array of size "+n);
+			
+			c++;
+			System.out.println();
+			long stopTime = System.nanoTime();
+			System.out.println("time: " + (stopTime - startTime)+"\n"); 
+		
+	}
+	}
+	
+}
